@@ -90,34 +90,7 @@
                 </table>
             </section>
 
-            <!-- Selected Hotspot Properties -->
-            <section class="properties-section" id="selectedProperties" style="display: none;">
-                <h3>Selected Hotspot Properties</h3>
-                <div class="properties-form">
-                    <div class="form-group">
-                        <label for="selectedLink">Link:</label>
-                        <input type="url" id="selectedLink" placeholder="https://example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="selectedTitle">Title:</label>
-                        <input type="text" id="selectedTitle" placeholder="Link title">
-                    </div>
-                    <div class="form-group">
-                        <label for="selectedTarget">Target:</label>
-                        <select id="selectedTarget">
-                            <option value="_self">Same window</option>
-                            <option value="_blank">New window</option>
-                            <option value="_parent">Parent frame</option>
-                            <option value="_top">Top frame</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button id="updateHotspot" class="btn-primary">Update</button>
-                        <button id="deleteHotspot" class="btn-danger">Delete</button>
-                        <button id="clearSelection" class="btn-secondary">Clear Selection</button>
-                    </div>
-                </div>
-            </section>
+            
 
             <!-- Code Output -->
             <section class="code-section">
@@ -159,6 +132,40 @@
                 <div class="modal-footer">
                     <button id="saveHotspot" class="btn-primary">Save</button>
                     <button id="cancelHotspot" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Hotspot Properties Modal -->
+        <div id="selectedHotspotModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Hotspot Properties</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="selectedLink">Link:</label>
+                        <input type="url" id="selectedLink" placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedTitle">Title:</label>
+                        <input type="text" id="selectedTitle" placeholder="Link title">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedTarget">Target:</label>
+                        <select id="selectedTarget">
+                            <option value="_self">Same window</option>
+                            <option value="_blank">New window</option>
+                            <option value="_parent">Parent frame</option>
+                            <option value="_top">Top frame</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="updateHotspot" class="btn-primary">Update</button>
+                    <button id="deleteHotspot" class="btn-danger">Delete</button>
+                    <button id="clearSelection" class="btn-secondary">Cancel</button>
                 </div>
             </div>
         </div>

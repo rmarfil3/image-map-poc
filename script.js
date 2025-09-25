@@ -59,14 +59,20 @@ class ImageMapGenerator {
         this.canvas.addEventListener('click', (e) => this.onClick(e));
 
         // Modal events
-        document.querySelector('.close').addEventListener('click', () => this.closeModal());
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', (e) => {
+                const modal = e.target.closest('.modal');
+                if (modal.id === 'hotspotModal') {
+                    this.closeModal();
+                } else if (modal.id === 'selectedHotspotModal') {
+                    this.closeSelectedModal();
+                }
+            });
+        });
         document.getElementById('saveHotspot').addEventListener('click', () => this.saveModalHotspot());
         document.getElementById('cancelHotspot').addEventListener('click', () => this.closeModal());
         
-        // Selected hotspot properties
-        document.getElementById('selectedLink').addEventListener('input', () => this.updateSelectedHotspot());
-        document.getElementById('selectedTitle').addEventListener('input', () => this.updateSelectedHotspot());
-        document.getElementById('selectedTarget').addEventListener('change', () => this.updateSelectedHotspot());
+        // Selected hotspot modal events
         document.getElementById('updateHotspot').addEventListener('click', () => this.updateSelectedHotspot());
         document.getElementById('deleteHotspot').addEventListener('click', () => this.deleteSelectedHotspot());
         document.getElementById('clearSelection').addEventListener('click', () => this.clearSelection());
@@ -300,7 +306,7 @@ class ImageMapGenerator {
         }
 
         if (!this.selectedHotspot) {
-            this.hideSelectedProperties();
+            this.closeSelectedModal();
         }
 
         this.redrawCanvas();
@@ -348,6 +354,10 @@ class ImageMapGenerator {
         this.modalHotspot = null;
     }
 
+    closeSelectedModal() {
+        document.getElementById('selectedHotspotModal').style.display = 'none';
+    }
+
     saveModalHotspot() {
         if (!this.modalHotspot) return;
 
@@ -365,16 +375,16 @@ class ImageMapGenerator {
         document.getElementById('selectedLink').value = hotspot.link;
         document.getElementById('selectedTitle').value = hotspot.title;
         document.getElementById('selectedTarget').value = hotspot.target;
-        document.getElementById('selectedProperties').style.display = 'block';
+        document.getElementById('selectedHotspotModal').style.display = 'block';
     }
 
     hideSelectedProperties() {
-        document.getElementById('selectedProperties').style.display = 'none';
+        document.getElementById('selectedHotspotModal').style.display = 'none';
     }
 
     clearSelection() {
         this.selectedHotspot = null;
-        this.hideSelectedProperties();
+        this.closeSelectedModal();
         this.redrawCanvas();
     }
 
@@ -386,6 +396,8 @@ class ImageMapGenerator {
         this.selectedHotspot.target = document.getElementById('selectedTarget').value;
 
         this.updateHotspotsTable();
+        this.closeSelectedModal();
+        this.redrawCanvas();
     }
 
     deleteSelectedHotspot() {
@@ -393,7 +405,7 @@ class ImageMapGenerator {
 
         this.hotspots = this.hotspots.filter(h => h.id !== this.selectedHotspot.id);
         this.selectedHotspot = null;
-        this.hideSelectedProperties();
+        this.closeSelectedModal();
         this.updateHotspotsTable();
         this.redrawCanvas();
     }
@@ -429,7 +441,7 @@ class ImageMapGenerator {
         this.hotspots = this.hotspots.filter(h => h.id !== id);
         if (this.selectedHotspot && this.selectedHotspot.id === id) {
             this.selectedHotspot = null;
-            this.hideHotspotProperties();
+            this.closeSelectedModal();
         }
         this.updateHotspotsTable();
         this.redrawCanvas();
@@ -441,7 +453,7 @@ class ImageMapGenerator {
             this.selectedHotspot = null;
             this.polygonPoints = [];
             this.isDrawingPolygon = false;
-            this.hideSelectedProperties();
+            this.closeSelectedModal();
             this.updateHotspotsTable();
             this.redrawCanvas();
         }
@@ -451,7 +463,7 @@ class ImageMapGenerator {
         if (this.hotspots.length > 0) {
             this.hotspots.pop();
             this.selectedHotspot = null;
-            this.hideSelectedProperties();
+            this.closeSelectedModal();
             this.updateHotspotsTable();
             this.redrawCanvas();
         }
