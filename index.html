@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Map Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Map Generator</h1>
+            <p>Create interactive HTML image maps with clickable areas</p>
+        </header>
+
+        <main>
+            <!-- Image Upload Section -->
+            <section class="upload-section">
+                <div class="upload-options">
+                    <div class="upload-tab active" data-tab="file">Upload from PC</div>
+                    <div class="upload-tab" data-tab="url">Load from URL</div>
+                </div>
+                
+                <div class="upload-content">
+                    <div class="tab-content active" id="file-tab">
+                        <input type="file" id="imageUpload" accept="image/*">
+                        <label for="imageUpload" class="upload-btn">Choose Image</label>
+                    </div>
+                    <div class="tab-content" id="url-tab">
+                        <input type="url" id="imageUrl" placeholder="Enter image URL">
+                        <button id="loadUrl" class="upload-btn">Load Image</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toolbar -->
+            <section class="toolbar">
+                <div class="tool-group">
+                    <button class="tool-btn active" data-tool="select" title="Select">
+                        <span>↖</span>
+                    </button>
+                    <button class="tool-btn" data-tool="rectangle" title="Rectangle">
+                        <span>▢</span>
+                    </button>
+                    <button class="tool-btn" data-tool="circle" title="Circle">
+                        <span>○</span>
+                    </button>
+                    <button class="tool-btn" data-tool="polygon" title="Polygon">
+                        <span>⬟</span>
+                    </button>
+                </div>
+                <div class="tool-group">
+                    <button id="clearAll" class="tool-btn" title="Clear All">Clear</button>
+                    <button id="undo" class="tool-btn" title="Undo">↶</button>
+                </div>
+            </section>
+
+            <!-- Canvas Area -->
+            <section class="canvas-section">
+                <div class="canvas-container">
+                    <div id="imageContainer">
+                        <img id="displayImage" style="display: none;">
+                        <canvas id="drawingCanvas"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hotspots Management -->
+            <section class="hotspots-section">
+                <h3>Active Hotspots</h3>
+                <div class="hotspots-info">
+                    <p>Click on a hotspot to select it, or double-click to edit properties.</p>
+                </div>
+                <table id="hotspotsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Shape</th>
+                            <th>Link</th>
+                            <th>Title</th>
+                            <th>Target</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- Selected Hotspot Properties -->
+            <section class="properties-section" id="selectedProperties" style="display: none;">
+                <h3>Selected Hotspot Properties</h3>
+                <div class="properties-form">
+                    <div class="form-group">
+                        <label for="selectedLink">Link:</label>
+                        <input type="url" id="selectedLink" placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedTitle">Title:</label>
+                        <input type="text" id="selectedTitle" placeholder="Link title">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedTarget">Target:</label>
+                        <select id="selectedTarget">
+                            <option value="_self">Same window</option>
+                            <option value="_blank">New window</option>
+                            <option value="_parent">Parent frame</option>
+                            <option value="_top">Top frame</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button id="updateHotspot" class="btn-primary">Update</button>
+                        <button id="deleteHotspot" class="btn-danger">Delete</button>
+                        <button id="clearSelection" class="btn-secondary">Clear Selection</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Output -->
+            <section class="code-section">
+                <h3>Generated HTML Code</h3>
+                <div class="code-controls">
+                    <button id="generateCode" class="btn-primary">Generate Code</button>
+                    <button id="copyCode" class="btn-secondary">Copy to Clipboard</button>
+                </div>
+                <textarea id="codeOutput" readonly placeholder="Generate your image map code to see it here..."></textarea>
+            </section>
+        </main>
+
+        <!-- Hotspot Properties Modal -->
+        <div id="hotspotModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Hotspot Properties</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modalLink">Link:</label>
+                        <input type="url" id="modalLink" placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalTitle">Title:</label>
+                        <input type="text" id="modalTitle" placeholder="Link title">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalTarget">Target:</label>
+                        <select id="modalTarget">
+                            <option value="_self">Same window</option>
+                            <option value="_blank">New window</option>
+                            <option value="_parent">Parent frame</option>
+                            <option value="_top">Top frame</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveHotspot" class="btn-primary">Save</button>
+                    <button id="cancelHotspot" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
